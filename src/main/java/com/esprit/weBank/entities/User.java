@@ -42,9 +42,6 @@ public class User implements Serializable {
 	@Column(name = "role")
 	@Enumerated(EnumType.STRING)
 	private UserRole role;
-	@OneToMany(targetEntity = Account.class, cascade = CascadeType.ALL)
-	@JoinColumn(name = "user_fk", referencedColumnName = "id")
-	private List<Account> accounts;
 
 	public User() {
 		super();
@@ -133,14 +130,6 @@ public class User implements Serializable {
 
 	public void setRole(UserRole role) {
 		this.role = role;
-	}
-
-	public List<Account> getAccounts() {
-		return accounts;
-	}
-
-	public void setAccounts(List<Account> accounts) {
-		this.accounts = accounts;
 	}
 
 }

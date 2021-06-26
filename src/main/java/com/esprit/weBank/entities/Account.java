@@ -6,11 +6,18 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import com.esprit.weBank.util.AccountType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity(name = "account")
 public class Account implements Serializable{
@@ -21,7 +28,7 @@ public class Account implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	@Column(name = "account_number")
-	private int accNumber;
+	private long accNumber;
 	@Column(name = "balance")
 	private double balance;
 	@Column(name = "opening_date")
@@ -31,12 +38,16 @@ public class Account implements Serializable{
 	@Column(name = "account_type")
 	@Enumerated(EnumType.STRING)
 	private AccountType accType;
+	@ManyToOne(targetEntity = User.class, optional = false)
+	@JoinColumn(name = "client_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+	private User Owner;
 	
 	public Account() {
 		super();
 	}
 
-	public Account(int accNumber, double balance, String openingDate, long rib, AccountType accType) {
+	public Account(long accNumber, double balance, String openingDate, long rib, AccountType accType) {
 		super();
 		this.accNumber = accNumber;
 		this.balance = balance;
@@ -44,12 +55,21 @@ public class Account implements Serializable{
 		this.rib = rib;
 		this.accType = accType;
 	}
+	
+	
+	public int getId() {
+		return id;
+	}
 
-	public int getAccNumber() {
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public long getAccNumber() {
 		return accNumber;
 	}
 
-	public void setAccNumber(int accNumber) {
+	public void setAccNumber(long accNumber) {
 		this.accNumber = accNumber;
 	}
 
@@ -84,6 +104,16 @@ public class Account implements Serializable{
 	public void setAccType(AccountType accType) {
 		this.accType = accType;
 	}
+
+	public User getOwner() {
+		return Owner;
+	}
+
+	public void setOwner(User owner) {
+		Owner = owner;
+	}
+	
+	
 	
 	
 }
