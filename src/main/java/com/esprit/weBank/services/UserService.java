@@ -23,7 +23,7 @@ public class UserService {
 	}
 	
 	public User findUserById(int id) {
-		return userRepository.findById(id).orElse(null);
+		return userRepository.findById(id).get();
 	}
 	
 	public User findUserByName(String name) {
@@ -34,8 +34,8 @@ public class UserService {
 		return userRepository.findByCin(cin).orElse(null);
 	}
 	
-	public User updateUser(User user) {
-		User existingUser = userRepository.findByCin(user.getCin()).orElse(null);
+	public User updateUser(User user, String cin) {
+		User existingUser = findUserByCin(cin);
 		if (existingUser != null) {
 			existingUser.setFirstName(user.getFirstName());
 			existingUser.setLastName(user.getLastName());
@@ -43,12 +43,20 @@ public class UserService {
 			existingUser.setPhoneNumber(user.getPhoneNumber());
 			existingUser.setEmail(user.getEmail());
 			existingUser.setAddress(user.getAddress());
+			return userRepository.save(existingUser);
 		}		
-		return userRepository.save(existingUser);
+		return null;
 	}
 	
 	public void deleteUserById(int id) {
 		userRepository.deleteById(id);
+	}
+	
+	public void deleteUserByCin(String cin) {
+		User tmp = findUserByCin(cin);
+		if (tmp != null) {
+			userRepository.deleteById(tmp.getId());
+		}
 	}
 
 }
