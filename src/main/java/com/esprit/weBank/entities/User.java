@@ -14,6 +14,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
+import com.esprit.weBank.util.UserRole;
+
+
 @Entity(name = "user")
 public class User implements Serializable {
 	
@@ -37,8 +40,8 @@ public class User implements Serializable {
 	@Column(name = "address")
 	private String address;
 	@Column(name = "role")
-	//@Enumerated(EnumType.STRING)
-	private String role;
+	@Enumerated(EnumType.STRING)
+	private UserRole role;
 	@OneToMany(targetEntity = Account.class, cascade = CascadeType.ALL)
 	@JoinColumn(name = "user_fk", referencedColumnName = "id")
 	private List<Account> accounts;
@@ -48,7 +51,7 @@ public class User implements Serializable {
 	}
 
 	public User(String firstName, String lastName, String birthDate, String phoneNumber, String cin, String email,
-			String address, String role) {
+			String address, UserRole role) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -124,11 +127,11 @@ public class User implements Serializable {
 		this.address = address;
 	}
 
-	public String getRole() {
+	public UserRole getRole() {
 		return role;
 	}
 
-	public void setRole(String role) {
+	public void setRole(UserRole role) {
 		this.role = role;
 	}
 

@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
+import com.esprit.weBank.entities.Account;
+
 @Entity(name = "credit")
 public class Credit {
 	@Id
