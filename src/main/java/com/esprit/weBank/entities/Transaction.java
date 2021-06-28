@@ -31,14 +31,14 @@ public class Transaction {
 	private Date dateT;
 	@Column(name = "montant")
 	private Double montant;
-	@Column(name = "device")
-	private String device;
+	@Column(name = "devise")
+	private String devise;
 
 	@OneToMany(targetEntity = Account.class, cascade = CascadeType.ALL)
 	@JoinColumn(name = "transaction_fk", referencedColumnName = "id")
 	private List<User> transaction;
 
-	public Transaction(String nomC, String type, int ribE, int ribR, Date dateT, Double montant, String device) {
+	public Transaction(String nomC, String type, int ribE, int ribR, Date dateT, Double montant, String devise) {
 		super();
 		this.nomC = nomC;
 		this.type = type;
@@ -46,7 +46,10 @@ public class Transaction {
 		this.ribR = ribR;
 		this.dateT = dateT;
 		this.montant = montant;
-		this.device = device;
+		this.devise = devise;
+	}
+	public Transaction(){
+		
 	}
 
 	public int getId() {
@@ -105,12 +108,12 @@ public class Transaction {
 		this.montant = montant;
 	}
 
-	public String getDevice() {
-		return device;
+	public String getdevise() {
+		return devise;
 	}
 
-	public void setDevice(String device) {
-		this.device = device;
+	public void setdevise(String devise) {
+		this.devise = devise;
 	}
 
 	public List<User> getTransaction() {
