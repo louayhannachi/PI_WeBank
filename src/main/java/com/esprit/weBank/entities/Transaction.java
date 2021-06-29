@@ -5,11 +5,16 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import com.esprit.weBank.entities.Account;;
 
@@ -34,12 +39,34 @@ public class Transaction {
 	@Column(name = "devise")
 	private String devise;
 
-	@OneToMany(targetEntity = Account.class, cascade = CascadeType.ALL)
-	@JoinColumn(name = "transaction_fk", referencedColumnName = "id")
-	private List<User> transaction;
+	@ManyToOne
+	@JoinColumn(name="user_FK", nullable=true)  
+	//@NotFound(action = NotFoundAction.IGNORE) 
+	private User user;
+	/*
+	@ManyToOne(fetch = FetchType.LAZY, optional=false)
+    @JoinColumn(name = "id", nullable = false)
+	
+    private User user;
+	
+	/*@ManyToOne(targetEntity = User.class, cascade = CascadeType.ALL)
+	@JoinColumn(name = "user_id_fk", referencedColumnName = "id")
+	private Integer user_id_fk;*/
 
-	public Transaction(String nomC, String type, int ribE, int ribR, Date dateT, Double montant, String devise) {
+
+
+	public Transaction(){
+		
+	}
+
+	
+
+
+
+	public Transaction(int id, String nomC, String type, int ribE, int ribR, Date dateT, Double montant, String devise,
+			User user) {
 		super();
+		this.id = id;
 		this.nomC = nomC;
 		this.type = type;
 		this.ribE = ribE;
@@ -47,9 +74,35 @@ public class Transaction {
 		this.dateT = dateT;
 		this.montant = montant;
 		this.devise = devise;
+		this.user = user;
 	}
-	public Transaction(){
-		
+
+
+
+
+
+	public String getDevise() {
+		return devise;
+	}
+
+
+
+
+
+	public void setDevise(String devise) {
+		this.devise = devise;
+	}
+
+
+
+
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public int getId() {
@@ -108,20 +161,8 @@ public class Transaction {
 		this.montant = montant;
 	}
 
-	public String getdevise() {
-		return devise;
-	}
+	
 
-	public void setdevise(String devise) {
-		this.devise = devise;
-	}
 
-	public List<User> getTransaction() {
-		return transaction;
-	}
-
-	public void setTransaction(List<User> transaction) {
-		this.transaction = transaction;
-	}
 
 }

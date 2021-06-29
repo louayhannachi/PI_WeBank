@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.esprit.weBank.entities.Account;
@@ -30,10 +31,10 @@ public class Credit {
 	@Column(name = "duree")
 	private int duree;
 	
-
-	@OneToMany(targetEntity = Account.class, cascade = CascadeType.ALL)
-	@JoinColumn(name = "credit_fk", referencedColumnName = "id")
-	private List<User> credit;
+/*
+	@ManyToOne(targetEntity = User.class, cascade = CascadeType.ALL)
+	@JoinColumn(name = "user_id_fk", referencedColumnName = "id")
+	private List<User> credit;*/
 
 	public Credit(String nomC, int ribR, Double montant, String device,int duree) {
 		super();
@@ -88,7 +89,7 @@ public class Credit {
 		this.duree = duree;
 	}
 
-
+/*
 	public List<User> getCredit() {
 		return credit;
 	}
@@ -98,5 +99,5 @@ public class Credit {
 		this.credit = credit;
 	}
 
-
+*/
 }

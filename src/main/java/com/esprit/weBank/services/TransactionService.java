@@ -31,7 +31,7 @@ public class TransactionService {
 	 public Transaction findTransactionById(int id) {
 			return transactionRepository.findById(id).orElse(null);
 		}
-	 
+	  
 	 
 	 public Transaction updateTransaction(Transaction transaction, int id) {
 		 Transaction existingTransaction = findTransactionById(id);
@@ -42,7 +42,7 @@ public class TransactionService {
 				existingTransaction.setRibR(transaction.getRibR());
 				existingTransaction.setDateT(transaction.getDateT());
 				existingTransaction.setMontant(transaction.getMontant());
-				existingTransaction.setdevise(transaction.getdevise());
+				existingTransaction.setDevise(transaction.getDevise());
 				return transactionRepository.save(existingTransaction);
 			}		
 			return null;
