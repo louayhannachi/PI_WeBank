@@ -1,11 +1,13 @@
 package com.esprit.weBank.entities;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,21 +24,29 @@ public class Post {
 	private Date creationDate;
 
 	@Column(name = "content")
-	private Date content;
+	private String content;
 	
-	@OneToMany(targetEntity = Comment.class, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="post", 
+			cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, 
+			fetch=FetchType.EAGER)
+	private List<Comment> comments = new ArrayList<>();
+	/*@OneToMany(targetEntity = Comment.class, cascade = CascadeType.ALL)
 	@JoinColumn(name = "post_comm_fk", referencedColumnName = "id")
 	private List<Comment> comments;
 	
 	@OneToMany(targetEntity = React.class, cascade = CascadeType.ALL)
 	@JoinColumn(name = "post_react_fk", referencedColumnName = "id")
-	private List<React> reacts;
+	private List<React> reacts;*/
 
-	public Post(int id, Date creationDate, Date content) {
+	public Post(int id, Date creationDate, String content) {
 		super();
 		this.id = id;
 		this.creationDate = creationDate;
 		this.content = content;
+	}
+	
+	public Post(){
+		
 	}
 
 	public int getId() {
@@ -55,13 +65,34 @@ public class Post {
 		this.creationDate = creationDate;
 	}
 
-	public Date getContent() {
+	public String getContent() {
 		return content;
 	}
 
-	public void setContent(Date content) {
+	public void setContent(String content) {
 		this.content = content;
 	}
+
+	public List<Comment> getComment() {
+		return comments;
+	}
+
+	public void setComment(List<Comment> comments) {
+		this.comments = comments;
+	}
+	
+	public void addcomment(Comment comment){
+		comment.setPost(this);
+		this.comments.add(comment);
+	}
+	
+	/*public List<Comment> getComments() {
+		return comments;
+	}
+	
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
+	}*/
 	
 	
 
