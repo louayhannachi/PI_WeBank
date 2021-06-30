@@ -34,6 +34,7 @@ public class PostService {
 	public Post updatePost(Post post, int id) {
 		Post existingPost = findPostById(id);
 		if (existingPost != null) {
+			existingPost.setUpdatedDate(post.getUpdatedDate());
 			existingPost.setContent(post.getContent());
 			return postRepository.save(existingPost);
 		}		

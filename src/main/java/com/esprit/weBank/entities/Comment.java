@@ -1,8 +1,9 @@
 package com.esprit.weBank.entities;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -20,10 +21,13 @@ public class Comment {
     private int id;
 	
 	@Column(name = "creationDate")
-	private Date creationDate;
+	private String creationDate;
 
 	@Column(name = "content")
 	private String content;
+	
+	@Column(name = "updatedDate")
+	private String updatedDate;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="post_FK", nullable=true)  
@@ -32,14 +36,14 @@ public class Comment {
 	public Comment (){
 		
 	}
+	
 
-
-
-	public Comment(int id, Date creationDate, String content, Post post) {
+	public Comment(int id, String creationDate, String content, String updatedDate, Post post) {
 		super();
 		this.id = id;
 		this.creationDate = creationDate;
 		this.content = content;
+		this.updatedDate = updatedDate;
 		this.post = post;
 	}
 
@@ -53,14 +57,28 @@ public class Comment {
 		this.id = id;
 	}
 
-	public Date getCreationDate() {
+	public String getCreationDate() {
 		return creationDate;
 	}
 
-	public void setCreationDate(Date creationDate) {
-		this.creationDate = creationDate;
+	public void setCreationDate(String creationDate) {
+		  DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
+		   LocalDateTime now = LocalDateTime.now();  
+		this.creationDate = dtf.format(now);
 	}
 
+	
+	public String getUpdatedDate() {
+		return updatedDate;
+	}
+
+
+	public void setUpdatedDate(String updatedDate) {
+		  DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
+		   LocalDateTime now = LocalDateTime.now();  
+		this.updatedDate = dtf.format(now);
+	}
+	
 	public String getContent() {
 		return content;
 	}
@@ -71,9 +89,9 @@ public class Comment {
 
 
 
-	public int getPost() {
+	/*public int getPost() {
 		return post.getId();
-	}
+	}*/
 
 
 

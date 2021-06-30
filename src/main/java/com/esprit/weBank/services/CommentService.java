@@ -26,4 +26,19 @@ public class CommentService {
 	public void deleteCommentById(int id) {
 		commentRepository.deleteById(id);
 	}
+	
+	public Comment findCommentById(int id) {
+
+		return commentRepository.findById(id).orElse(null);
+	}
+	
+	public Comment updateComment(Comment comment, int id) {
+		Comment existingComment = findCommentById(id);
+		if (existingComment != null) {
+			existingComment.setUpdatedDate(comment.getUpdatedDate());
+			existingComment.setContent(comment.getContent());
+			return commentRepository.save(existingComment);
+		}		
+		return null;
+	}
 }
