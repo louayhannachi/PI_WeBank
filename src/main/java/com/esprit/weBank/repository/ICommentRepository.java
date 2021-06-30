@@ -8,5 +8,4 @@ import com.esprit.weBank.entities.Comment;
 
 public interface ICommentRepository extends CrudRepository<Comment, Integer> {
 	Optional<Comment> findById(int id);
-
 }

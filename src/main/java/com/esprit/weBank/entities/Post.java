@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,7 +14,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
 @Entity(name = "post")
@@ -35,6 +35,12 @@ public class Post {
 			cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, 
 			fetch=FetchType.EAGER, orphanRemoval = true)
 	private List<Comment> comments = new ArrayList<>();
+	
+	@OneToMany(mappedBy="post", 
+			cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, 
+			fetch=FetchType.EAGER, orphanRemoval = true)
+	private Set<React> reacts ;
+	
 	/*@OneToMany(targetEntity = Comment.class, cascade = CascadeType.ALL)
 	@JoinColumn(name = "post_comm_fk", referencedColumnName = "id")
 	private List<Comment> comments;
@@ -91,6 +97,8 @@ public class Post {
 	public void setContent(String content) {
 		this.content = content;
 	}
+	
+	//*************comment Join**************//
 
 	public List<Comment> getComment() {
 		return comments;
@@ -105,14 +113,23 @@ public class Post {
 		this.comments.add(comment);
 	}
 	
-	/*public List<Comment> getComments() {
-		return comments;
+	//*************comment Join**************//
+
+
+	public Set<React> getReact() {
+		return reacts;
+	}
+
+	public void setReact(Set<React> reacts) {
+		this.reacts = reacts;
 	}
 	
-	public void setComments(List<Comment> comments) {
-		this.comments = comments;
-	}*/
+	public void addreact(React react){
+		react.setPost(this);
+		this.reacts.add(react);
+	}
 	
+
 	
 
 }
