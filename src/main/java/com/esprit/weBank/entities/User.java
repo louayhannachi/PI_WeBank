@@ -1,6 +1,7 @@
 package com.esprit.weBank.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -8,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -42,9 +44,22 @@ public class User implements Serializable {
 	@Column(name = "role")
 	@Enumerated(EnumType.STRING)
 	private UserRole role;
+	
+	@OneToMany(mappedBy="user", 
+			cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, 
+			fetch=FetchType.EAGER)
+	private List<Transaction> transactions = new ArrayList<>();
 
 	public User() {
 		super();
+	}
+
+	public List<Transaction> getTransactions() {
+		return transactions;
+	}
+
+	public void setTransactions(List<Transaction> transactions) {
+		this.transactions = transactions;
 	}
 
 	public User(String firstName, String lastName, String birthDate, String phoneNumber, String cin, String email,
@@ -58,6 +73,10 @@ public class User implements Serializable {
 		this.email = email;
 		this.address = address;
 		this.role = role;
+	}
+	public void addTransactionByUser(Transaction transaction){
+		transaction.setUser(this);
+		this.transactions.add(transaction);
 	}
 
 	public int getId() {
