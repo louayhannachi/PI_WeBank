@@ -1,8 +1,11 @@
 package com.esprit.weBank.entities;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,7 +14,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
 @Entity(name = "post")
@@ -21,15 +23,24 @@ public class Post {
     private int id;
 	
 	@Column(name = "creationDate")
-	private Date creationDate;
+	private String creationDate;
 
 	@Column(name = "content")
 	private String content;
 	
+	@Column(name = "updatedDate")
+	private String updatedDate;
+	
 	@OneToMany(mappedBy="post", 
 			cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, 
-			fetch=FetchType.EAGER)
+			fetch=FetchType.EAGER, orphanRemoval = true)
 	private List<Comment> comments = new ArrayList<>();
+	
+	@OneToMany(mappedBy="post", 
+			cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, 
+			fetch=FetchType.EAGER, orphanRemoval = true)
+	private Set<React> reacts ;
+	
 	/*@OneToMany(targetEntity = Comment.class, cascade = CascadeType.ALL)
 	@JoinColumn(name = "post_comm_fk", referencedColumnName = "id")
 	private List<Comment> comments;
@@ -38,11 +49,13 @@ public class Post {
 	@JoinColumn(name = "post_react_fk", referencedColumnName = "id")
 	private List<React> reacts;*/
 
-	public Post(int id, Date creationDate, String content) {
+	public Post(int id, String creationDate, String content , String updatedDate) {
 		super();
 		this.id = id;
 		this.creationDate = creationDate;
 		this.content = content;
+		this.updatedDate = updatedDate;
+
 	}
 	
 	public Post(){
@@ -57,12 +70,24 @@ public class Post {
 		this.id = id;
 	}
 
-	public Date getCreationDate() {
+	public String getCreationDate() {
 		return creationDate;
 	}
 
 	public void setCreationDate(Date creationDate) {
-		this.creationDate = creationDate;
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
+		   LocalDateTime now = LocalDateTime.now();  
+		this.creationDate = dtf.format(now);	}
+
+	
+	public String getUpdatedDate() {
+		return updatedDate;
+	}
+
+	public void setUpdatedDate(String updatedDate) {
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
+		   LocalDateTime now = LocalDateTime.now();  
+		this.updatedDate = dtf.format(now);
 	}
 
 	public String getContent() {
@@ -72,6 +97,8 @@ public class Post {
 	public void setContent(String content) {
 		this.content = content;
 	}
+	
+	//*************comment Join**************//
 
 	public List<Comment> getComment() {
 		return comments;
@@ -86,14 +113,23 @@ public class Post {
 		this.comments.add(comment);
 	}
 	
-	/*public List<Comment> getComments() {
-		return comments;
+	//*************comment Join**************//
+
+
+	public Set<React> getReact() {
+		return reacts;
+	}
+
+	public void setReact(Set<React> reacts) {
+		this.reacts = reacts;
 	}
 	
-	public void setComments(List<Comment> comments) {
-		this.comments = comments;
-	}*/
+	public void addreact(React react){
+		react.setPost(this);
+		this.reacts.add(react);
+	}
 	
+
 	
 
 }
