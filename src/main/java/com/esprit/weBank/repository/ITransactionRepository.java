@@ -13,6 +13,6 @@ public interface ITransactionRepository extends CrudRepository<Transaction, Inte
 
 	Optional<List<Transaction>> findByRibE(int ribE);
 	
-	@Query("SELECT t FROM Transaction t where t.user.id:=id ")
-	public List<Transaction> getAllTransactionByIdUser(@Param("id") int id );
+	/*@Query("SELECT t FROM Transaction t where t.user.id:=id ")
+	public List<Transaction> getAllTransactionByIdUser(@Param("id") int id );*/
 }
