@@ -43,4 +43,18 @@ public class PostRestController {
 		return postService.updatePost(post, id);
 	}
 	
+    @GetMapping(value = "/getNbrPost")
+	public int getNombreEmployeJPQL() {
+		return postService.getNbrPost();
+	}
+	
+    @GetMapping(value = "/getNbrLikes/{idPost}")
+	public int getNbrLikes(@PathVariable(value = "idPost") int idPost) {
+		return postService.getLikesByPost(idPost);
+	}
+    
+    @GetMapping(value = "/getNbrDislikes/{idPost}")
+	public int getNbrDislikes(@PathVariable(value = "idPost") int idPost) {
+		return postService.getDislikesByPost(idPost);
+	}
 }

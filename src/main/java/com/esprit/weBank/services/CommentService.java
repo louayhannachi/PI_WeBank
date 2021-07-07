@@ -27,6 +27,13 @@ public class CommentService {
 		commentRepository.deleteById(id);
 	}
 	
+	/*public void resetCommentPostById(int id)
+	{
+		Comment comment = commentRepository.findById(id).get();
+		comment.setPost(null);			
+	}*/
+	
+	
 	public Comment findCommentById(int id) {
 
 		return commentRepository.findById(id).orElse(null);

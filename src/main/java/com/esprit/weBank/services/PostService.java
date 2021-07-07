@@ -40,4 +40,16 @@ public class PostService {
 		}		
 		return null;
 	}
+	
+	public int getNbrPost() {
+		return postRepository.countPost();
+	}
+	
+	public int getLikesByPost(int idPost){
+		return postRepository.findReactsByPost("LIKE",idPost);
+	}
+	
+	public int getDislikesByPost(int idPost){
+		return postRepository.findReactsByPost("DISLIKE",idPost);
+	}
 }

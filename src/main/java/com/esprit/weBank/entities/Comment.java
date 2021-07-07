@@ -2,7 +2,6 @@ package com.esprit.weBank.entities;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -89,9 +88,9 @@ public class Comment {
 
 
 
-	/*public int getPost() {
+	public int getPost() {
 		return post.getId();
-	}*/
+	}
 
 
 
