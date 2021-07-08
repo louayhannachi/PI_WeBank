@@ -2,6 +2,7 @@ package com.esprit.weBank.entities;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -60,10 +61,10 @@ public class Comment {
 		return creationDate;
 	}
 
-	public void setCreationDate(String creationDate) {
+	public void setCreationDate(Date creationDate) {
 		  DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
-		   LocalDateTime now = LocalDateTime.now();  
-		this.creationDate = dtf.format(now);
+		  LocalDateTime now = LocalDateTime.now();  
+		  this.creationDate = dtf.format(now);
 	}
 
 	

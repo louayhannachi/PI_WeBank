@@ -2,9 +2,7 @@ package com.esprit.weBank.entities;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -19,47 +17,62 @@ import javax.persistence.OneToMany;
 @Entity(name = "post")
 public class Post {
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
+
 	@Column(name = "creationDate")
 	private String creationDate;
 
 	@Column(name = "content")
 	private String content;
-	
+
 	@Column(name = "updatedDate")
 	private String updatedDate;
-	
-	@OneToMany(mappedBy="post", 
-			cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, 
-			fetch=FetchType.EAGER, orphanRemoval = true)
-	private List<Comment> comments = new ArrayList<>();
-	
-	@OneToMany(mappedBy="post", 
-			cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, 
-			fetch=FetchType.EAGER, orphanRemoval = true)
-	private Set<React> reacts ;
-	
-	/*@OneToMany(targetEntity = Comment.class, cascade = CascadeType.ALL)
-	@JoinColumn(name = "post_comm_fk", referencedColumnName = "id")
-	private List<Comment> comments;
-	
-	@OneToMany(targetEntity = React.class, cascade = CascadeType.ALL)
-	@JoinColumn(name = "post_react_fk", referencedColumnName = "id")
-	private List<React> reacts;*/
 
-	public Post(int id, String creationDate, String content , String updatedDate) {
+	@Column(name = "nbrLikes")
+	private int nbrLikes;
+
+	@Column(name = "nbrDislikes")
+	private int nbrDislikes;
+
+	@OneToMany(mappedBy = "post", cascade = { CascadeType.PERSIST,
+			CascadeType.REMOVE }, fetch = FetchType.EAGER, orphanRemoval = true)
+	private Set<Comment> comments ;
+
+	@OneToMany(mappedBy = "post", cascade = { CascadeType.PERSIST,
+			CascadeType.REMOVE }, fetch = FetchType.EAGER, orphanRemoval = true)
+	private Set<React> reacts;
+
+	/*
+	 * @ManyToOne(fetch = FetchType.EAGER)
+	 * 
+	 * @JoinColumn(name="user_FK", nullable=true) private User user;
+	 */
+	/*
+	 * @OneToMany(targetEntity = Comment.class, cascade = CascadeType.ALL)
+	 * 
+	 * @JoinColumn(name = "post_comm_fk", referencedColumnName = "id") private
+	 * List<Comment> comments;
+	 * 
+	 * @OneToMany(targetEntity = React.class, cascade = CascadeType.ALL)
+	 * 
+	 * @JoinColumn(name = "post_react_fk", referencedColumnName = "id") private
+	 * List<React> reacts;
+	 */
+
+	public Post(int id, String creationDate, String content, String updatedDate, int nbrLikes, int nbrDislikes) {
 		super();
 		this.id = id;
 		this.creationDate = creationDate;
 		this.content = content;
 		this.updatedDate = updatedDate;
+		this.nbrLikes = nbrLikes;
+		this.nbrDislikes = nbrDislikes;
 
 	}
-	
-	public Post(){
-		
+
+	public Post() {
+
 	}
 
 	public int getId() {
@@ -75,18 +88,18 @@ public class Post {
 	}
 
 	public void setCreationDate(Date creationDate) {
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
-		   LocalDateTime now = LocalDateTime.now();  
-		this.creationDate = dtf.format(now);	}
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+		LocalDateTime now = LocalDateTime.now();
+		this.creationDate = dtf.format(now);
+	}
 
-	
 	public String getUpdatedDate() {
 		return updatedDate;
 	}
 
 	public void setUpdatedDate(String updatedDate) {
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
-		   LocalDateTime now = LocalDateTime.now();  
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+		LocalDateTime now = LocalDateTime.now();
 		this.updatedDate = dtf.format(now);
 	}
 
@@ -97,39 +110,54 @@ public class Post {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	
-	//*************comment Join**************//
 
-	public List<Comment> getComment() {
+	public int getNbrLikes() {
+		return nbrLikes;
+	}
+
+	public void setNbrLikes(int nbrLikes) {
+		this.nbrLikes = nbrLikes;
+	}
+	
+	public int getNbrDislikes() {
+		return nbrDislikes;
+	}
+
+	public void setNbrDislikes(int nbrDislikes) {
+		this.nbrDislikes = nbrDislikes;
+	}
+
+	// *************comment Join**************
+
+
+	public Set<Comment> getComment() {
 		return comments;
 	}
 
-	public void setComment(List<Comment> comments) {
+	public void setComment(Set<Comment> comments) {
 		this.comments = comments;
 	}
-	
-	public void addcomment(Comment comment){
+
+	public void addcomment(Comment comment) {
 		comment.setPost(this);
 		this.comments.add(comment);
 	}
-	
-	//*************comment Join**************//
 
+	// *************comment Join**************
 
-	public Set<React> getReact() {
+	/*public Set<React> getReact() {
 		return reacts;
-	}
+	}*/
 
 	public void setReact(Set<React> reacts) {
 		this.reacts = reacts;
 	}
-	
-	public void addreact(React react){
+
+	public void addreact(React react) {
 		react.setPost(this);
 		this.reacts.add(react);
 	}
-	
 
-	
+	// ******************user*****************//
 
 }

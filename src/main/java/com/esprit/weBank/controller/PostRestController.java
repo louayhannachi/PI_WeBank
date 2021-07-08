@@ -30,6 +30,7 @@ public class PostRestController {
 
 	@GetMapping(value = "/getAllPosts")
 	public List<Post> getAllPosts() {
+		
 		return postService.findAllPosts();
 	}
 	

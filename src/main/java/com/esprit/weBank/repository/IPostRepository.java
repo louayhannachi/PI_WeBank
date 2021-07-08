@@ -16,6 +16,7 @@ public interface IPostRepository extends CrudRepository<Post, Integer> {
 	@Query("SELECT count(*) FROM post")
     public int countPost();
 	
+	
 	@Query(value="select count(*) list  from ( "
 			+ "SELECT post.id, react.react_Type FROM post "
 			+ "INNER JOIN react ON post.id = react.post_fk "
