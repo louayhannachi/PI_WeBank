@@ -4,17 +4,32 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.esprit.weBank.entities.Account;
 import com.esprit.weBank.entities.Alert;
 import com.esprit.weBank.repository.IAlertRepository;
-
+import com.esprit.weBank.entities.Budget;
+import com.esprit.weBank.entities.Transaction;
 @Service
 public class AlertService {
 	
 	@Autowired
 	private IAlertRepository alertRepository;
+
+	@Autowired
+	private BudgetService budgetService;
+	@Autowired
+	private AccountService accountService;
 	
-	public Alert saveAlert(Alert alert) {
-	return alertRepository.save(alert);
+	
+	public Alert saveAlert(Alert alert, int id) {
+		Account ac = accountService.findAccountById(id);
+		if(ac.getBudget().getPlafond()>ac.getSolde())
+		 	{
+		 		return alertRepository.save(alert);
+		 	}else
+		 		return null;
+	
 	}
 	
 	public List<Alert> findAllAlert() {

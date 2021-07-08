@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.esprit.weBank.entities.Account;
 import com.esprit.weBank.entities.Budget;
 import com.esprit.weBank.repository.IBudgetRepository;
 
@@ -11,7 +12,7 @@ import com.esprit.weBank.repository.IBudgetRepository;
 public class BudgetService {
 	@Autowired
 	private IBudgetRepository budgetRepository;
-	
+
 	public Budget saveBudget(Budget budget) {
 		return budgetRepository.save(budget);
 	}

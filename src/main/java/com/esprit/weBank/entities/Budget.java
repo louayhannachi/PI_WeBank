@@ -13,7 +13,7 @@ public class Budget {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	@Column(name = "plafond")
-	private String plafond;
+	private int plafond;
 	@Column(name = "limit_date")
 	private String limitDate;
 	
@@ -21,7 +21,8 @@ public class Budget {
 	public Budget() {
 		super();
 	}
-	public Budget(int id, String plafond, String limitDate) {
+	
+	public Budget(int id, int plafond, String limitDate) {
 		super();
 		this.id = id;
 		this.plafond = plafond;
@@ -33,10 +34,10 @@ public class Budget {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getPlafond() {
+	public int getPlafond() {
 		return plafond;
 	}
-	public void setPlafond(String plafond) {
+	public void setPlafond(int plafond) {
 		this.plafond = plafond;
 	}
 	public String getLimitDate() {

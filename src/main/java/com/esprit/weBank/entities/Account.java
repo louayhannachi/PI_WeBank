@@ -1,5 +1,6 @@
 package com.esprit.weBank.entities;
 
+
 import java.io.Serializable;
 
 import javax.persistence.Column;
@@ -12,17 +13,19 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.CascadeType;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+
 import com.esprit.weBank.util.AccountType;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity(name = "account")
-public class Account implements Serializable{
+public class Account{
 	
-	private static final long serialVersionUID = 1L;
+	//private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,6 +38,8 @@ public class Account implements Serializable{
 	private String openingDate;
 	@Column(name = "rib")
 	private long rib;
+	@Column(name = "solde")
+	private int solde;
 	@Column(name = "account_type")
 	@Enumerated(EnumType.STRING)
 	private AccountType accType;
@@ -42,21 +47,33 @@ public class Account implements Serializable{
 	@JoinColumn(name = "client_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
 	private User Owner;
-	
+
+	@OneToOne
+	@JoinColumn(name="budget_id")
+	private Budget budget;
+
 	public Account() {
 		super();
 	}
 
-	public Account(long accNumber, double balance, String openingDate, long rib, AccountType accType) {
+	public Account(long accNumber, double balance, String openingDate, long rib, AccountType accType, int solde) {
 		super();
 		this.accNumber = accNumber;
 		this.balance = balance;
 		this.openingDate = openingDate;
 		this.rib = rib;
 		this.accType = accType;
+		this.solde=solde;
 	}
-	
-	
+
+	public Budget getBudget() {
+		return budget;
+	}
+
+	public void setBudget(Budget budget) {
+		this.budget = budget;
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -112,8 +129,14 @@ public class Account implements Serializable{
 	public void setOwner(User owner) {
 		Owner = owner;
 	}
-	
-	
+
+	public int getSolde() {
+		return solde;
+	}
+
+	public void setSolde(int solde) {
+		this.solde = solde;
+	}
 	
 	
 }
