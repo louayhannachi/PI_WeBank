@@ -2,7 +2,12 @@ package com.esprit.weBank.controller;
 
 import java.util.List;
 
+import javax.annotation.security.RolesAllowed;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +20,7 @@ import com.esprit.weBank.entities.Account;
 import com.esprit.weBank.services.AccountService;
 
 @RestController
+@EnableWebSecurity
 public class AccountRestController {
 	
 	@Autowired
@@ -50,6 +56,7 @@ public class AccountRestController {
 		return accountService.findAccountByRib(rib);
 	}
 	
+	//@RolesAllowed({"ROLE_ADMIN"})
 	@GetMapping(value ="/getAllAccounts")
 	public List<Account> getAllAccounts() {
 		return accountService.findAllAccount();

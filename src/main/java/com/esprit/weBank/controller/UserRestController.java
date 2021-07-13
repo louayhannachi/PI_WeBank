@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.esprit.weBank.entities.User;
 import com.esprit.weBank.services.UserService;
+import com.esprit.weBank.util.UserRole;
 
 @RestController
 public class UserRestController {
@@ -14,8 +15,15 @@ public class UserRestController {
 	@Autowired
 	private UserService userService;	
 	
-	@PutMapping(value = "/createUser")
+	@PutMapping(value = "/createEmployee")
     public User createUser(@RequestBody User user) {
+		user.setRole(UserRole.ROLE_EMPLOYEE);
+		return userService.saveUser(user);
+	}
+	
+	@PutMapping(value = "/createClient")
+    public User createClient(@RequestBody User user) {
+		user.setRole(UserRole.ROLE_CLIENT);
 		return userService.saveUser(user);
 	}
 	

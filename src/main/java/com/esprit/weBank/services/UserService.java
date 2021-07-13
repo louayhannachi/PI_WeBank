@@ -34,6 +34,10 @@ public class UserService {
 		return userRepository.findByCin(cin).orElse(null);
 	}
 	
+	public User findByUserName(String username) {
+		return userRepository.findByUsername(username).orElse(null);
+	}
+	
 	public User updateUser(User user, String cin) {
 		User existingUser = findUserByCin(cin);
 		if (existingUser != null) {

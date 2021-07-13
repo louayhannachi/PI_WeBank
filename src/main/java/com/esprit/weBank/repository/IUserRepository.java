@@ -12,5 +12,6 @@ public interface IUserRepository extends CrudRepository<User, Integer> {
 	
 	Optional<User> findByFirstName(String name);
 	Optional<User> findByCin(String cin);
+	Optional<User> findByUsername(String username);
 	void deleteByCin(String cin);
 }

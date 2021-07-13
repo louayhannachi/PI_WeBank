@@ -1,5 +1,5 @@
 package com.esprit.weBank.util;
 
 public enum UserRole {
-	CLIENT, EMPLOYEE
+	ROLE_CLIENT, ROLE_EMPLOYEE, ROLE_ADMIN
 }

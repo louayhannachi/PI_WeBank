@@ -19,12 +19,14 @@ import com.esprit.weBank.util.UserRole;
 
 @Entity(name = "user")
 public class User implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	@Column(name = "username")
+	private String username;
 	@Column(name = "firstname")
 	private String firstName;
 	@Column(name = "lastname")
@@ -39,6 +41,8 @@ public class User implements Serializable {
 	private String email;
 	@Column(name = "address")
 	private String address;
+	@Column(name = "password")
+	private String password;
 	@Column(name = "role")
 	@Enumerated(EnumType.STRING)
 	private UserRole role;
@@ -47,9 +51,11 @@ public class User implements Serializable {
 		super();
 	}
 
-	public User(String firstName, String lastName, String birthDate, String phoneNumber, String cin, String email,
-			String address, UserRole role) {
+	public User(int id, String username, String firstName, String lastName, String birthDate, String phoneNumber,
+			String cin, String email, String address, String password, UserRole role) {
 		super();
+		this.id = id;
+		this.username = username;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.birthDate = birthDate;
@@ -57,6 +63,7 @@ public class User implements Serializable {
 		this.cin = cin;
 		this.email = email;
 		this.address = address;
+		this.password = password;
 		this.role = role;
 	}
 
@@ -130,6 +137,22 @@ public class User implements Serializable {
 
 	public void setRole(UserRole role) {
 		this.role = role;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 }
