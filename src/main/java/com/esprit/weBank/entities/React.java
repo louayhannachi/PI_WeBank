@@ -57,6 +57,21 @@ public class React {
 	public void setPost(Post post) {
 		this.post = post;
 	}
+
+	public Post getPost() {
+		return post;
+	}
+
+    /*public int getPostLikes() {
+		return post.getNbrLikes();
+	}
+	
+	public int getPostDislikes() {
+		return post.getNbrLikes();
+	}*/
+	
+	
+	
 	
 	
 

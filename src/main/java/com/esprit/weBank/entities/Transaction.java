@@ -1,23 +1,13 @@
 package com.esprit.weBank.entities;
 
 import java.util.Date;
-import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
-
-import com.esprit.weBank.entities.Account;;
-
 
 @Entity(name = "transaction")
 public class Transaction {
@@ -40,28 +30,12 @@ public class Transaction {
 	private String devise;
 
 	@ManyToOne
-	@JoinColumn(name="user_FK", nullable=true)  
-	//@NotFound(action = NotFoundAction.IGNORE) 
+	@JoinColumn(name = "user_FK", nullable = true)
 	private User user;
-	/*
-	@ManyToOne(fetch = FetchType.LAZY, optional=false)
-    @JoinColumn(name = "id", nullable = false)
-	
-    private User user;
-	
-	/*@ManyToOne(targetEntity = User.class, cascade = CascadeType.ALL)
-	@JoinColumn(name = "user_id_fk", referencedColumnName = "id")
-	private Integer user_id_fk;*/
 
+	public Transaction() {
 
-
-	public Transaction(){
-		
 	}
-
-	
-
-
 
 	public Transaction(int id, String nomC, String type, int ribE, int ribR, Date dateT, Double montant, String devise,
 			User user) {
@@ -77,28 +51,16 @@ public class Transaction {
 		this.user = user;
 	}
 
-
-
-
-
 	public String getDevise() {
 		return devise;
 	}
-
-
-
-
 
 	public void setDevise(String devise) {
 		this.devise = devise;
 	}
 
-
-
-
-
-	public User getUser() {
-		return user;
+	public int getUser() {
+		return user.getId();
 	}
 
 	public void setUser(User user) {
@@ -160,9 +122,5 @@ public class Transaction {
 	public void setMontant(Double montant) {
 		this.montant = montant;
 	}
-
-	
-
-
 
 }

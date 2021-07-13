@@ -20,9 +20,9 @@ public class AlertRestController {
 	private AlertService alertService;
 	
 	
-	@PutMapping(value = "/createAlert")
-    public Alert createAlert(@RequestBody Alert alert) {
-		return alertService.saveAlert(alert);
+	@PutMapping(value = "/createAlert/{id}")
+    public Alert createAlert(@PathVariable(value = "id") int id, @RequestBody Alert alert) {
+		return alertService.saveAlert(alert,id);
 	}
 	
 	@PostMapping(value ="/updateAlert/{id}")

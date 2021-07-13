@@ -1,9 +1,5 @@
 package com.esprit.weBank.entities;
 
-import java.util.Date;
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,9 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
-import com.esprit.weBank.entities.Account;
 
 @Entity(name = "credit")
 public class Credit {
@@ -31,19 +25,26 @@ public class Credit {
 	@Column(name = "duree")
 	private int duree;
 	
-/*
-	@ManyToOne(targetEntity = User.class, cascade = CascadeType.ALL)
-	@JoinColumn(name = "user_id_fk", referencedColumnName = "id")
-	private List<User> credit;*/
+	@ManyToOne
+	@JoinColumn(name = "user_credit_FK", nullable = true)
+	private User user;
 
-	public Credit(String nomC, int ribR, Double montant, String device,int duree) {
+	public Credit() {
+		
+	}
+
+	
+	public Credit(int id, String nomC, int ribR, Double montant, String device, int duree, User user) {
 		super();
+		this.id = id;
 		this.nomC = nomC;
 		this.ribR = ribR;
 		this.montant = montant;
 		this.device = device;
 		this.duree = duree;
+		this.user = user;
 	}
+
 
 	public int getId() {
 		return id;
@@ -75,6 +76,16 @@ public class Credit {
 	}
 
 
+	public Double getMontant() {
+		return montant;
+	}
+
+
+	public void setMontant(Double montant) {
+		this.montant = montant;
+	}
+
+
 	public String getDevice() {
 		return device;
 	}
@@ -85,19 +96,24 @@ public class Credit {
 	}
 
 
+	public int getDuree() {
+		return duree;
+	}
+
+
 	public void setDuree(int duree) {
 		this.duree = duree;
 	}
 
-/*
-	public List<User> getCredit() {
-		return credit;
+
+	public User getUser() {
+		return user;
 	}
 
 
-	public void setCredit(List<User> credit) {
-		this.credit = credit;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
-*/
+
 }
