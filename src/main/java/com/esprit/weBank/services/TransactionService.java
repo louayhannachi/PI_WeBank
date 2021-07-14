@@ -5,6 +5,8 @@ import java.util.List;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.esprit.weBank.entities.Credit;
 import com.esprit.weBank.entities.Transaction;
 import com.esprit.weBank.entities.User;
 import com.esprit.weBank.repository.ITransactionRepository;
@@ -59,7 +61,18 @@ public class TransactionService {
 		return null;
 	}
 
+	public Transaction updateTransactionNull(Transaction transaction, int id) {
+		Transaction existingTransaction = findTransactionById(id);
+		if (existingTransaction != null) {
+			existingTransaction.setUser(null);
+			return transactionRepository.save(existingTransaction);
+		}
+		return null;
+	}
+	
 	public void deleteTransactionById(int id) {
+		Transaction existingTransaction = findTransactionById(id);
+		updateTransactionNull(existingTransaction, id);
 		transactionRepository.deleteById(id);
 	}
 
