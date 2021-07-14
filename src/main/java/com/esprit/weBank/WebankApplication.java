@@ -2,9 +2,11 @@ package com.esprit.weBank;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
-public class WebankApplication {
+@EnableScheduling
+public class WebankApplication  {
 
 	public static void main(String[] args) {
 		SpringApplication.run(WebankApplication.class, args);

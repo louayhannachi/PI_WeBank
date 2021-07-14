@@ -54,7 +54,11 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 		.antMatchers("/api/authenticate").permitAll()
 		.antMatchers(
-				"/api/getAllAccounts"
+				"/api/getAllAccounts",
+				"/api/getAllBudget",
+				"/api/createAlert/*",
+				"/api/createTransaction",
+				"/api/convert"
 				).hasAnyRole("EMPLOYEE", "CLIENT", "ADMIN")
 		.antMatchers(
 				"/api/createClient", 

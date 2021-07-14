@@ -38,8 +38,6 @@ public class Account{
 	private String openingDate;
 	@Column(name = "rib", unique = true)
 	private long rib;
-	@Column(name = "solde")
-	private int solde;
 	@Column(name = "account_type")
 	@Enumerated(EnumType.STRING)
 	private AccountType accType;
@@ -56,14 +54,13 @@ public class Account{
 		super();
 	}
 
-	public Account(long accNumber, double balance, String openingDate, long rib, AccountType accType, int solde) {
+	public Account(long accNumber, double balance, String openingDate, long rib, AccountType accType) {
 		super();
 		this.accNumber = accNumber;
 		this.balance = balance;
 		this.openingDate = openingDate;
 		this.rib = rib;
 		this.accType = accType;
-		this.solde=solde;
 	}
 
 	public Budget getBudget() {
@@ -130,13 +127,5 @@ public class Account{
 		Owner = owner;
 	}
 
-	public int getSolde() {
-		return solde;
-	}
-
-	public void setSolde(int solde) {
-		this.solde = solde;
-	}
-	
 	
 }
