@@ -33,6 +33,9 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
 	
+	@Autowired
+	private CustomAccessDeniedHandler customAccessDeniedHandler;
+	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(appUserDetailsService);
@@ -65,7 +68,9 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 				"/api/getUserByName/*"
 				).hasAnyRole("CLIENT", "ADMIN")
 		.anyRequest().authenticated().and()
-        .exceptionHandling().authenticationEntryPoint(customAuthenticationEntryPoint)
+        .exceptionHandling()
+        .authenticationEntryPoint(customAuthenticationEntryPoint)
+        .accessDeniedHandler(customAccessDeniedHandler)
 		.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);			
 	}	

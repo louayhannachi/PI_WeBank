@@ -5,6 +5,8 @@ import java.util.List;
 import javax.annotation.security.RolesAllowed;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.esprit.weBank.entities.Account;
 import com.esprit.weBank.services.AccountService;
+import com.esprit.weBank.util.AccountType;
 
 @RestController
 @EnableWebSecurity
@@ -27,8 +30,25 @@ public class AccountRestController {
 	private AccountService accountService;	
 	
 	@PutMapping(value = "/createAccount/{cin}")
-    public Account createAccount(@PathVariable(value = "cin") String cin, @RequestBody Account account) {
-		return accountService.saveAccount(cin, account);
+    public ResponseEntity<Object> createAccount(@PathVariable(value = "cin") String cin, @RequestBody Account account) {
+		Account accByNum = accountService.findAccountByAccNumber(account.getAccNumber());
+		if (accByNum != null) {
+			return new ResponseEntity<>("Account number already exist !", HttpStatus.BAD_REQUEST);
+		} 
+		Account accByRib = accountService.findAccountByRib(account.getRib());
+		if (accByRib != null) {
+			return new ResponseEntity<>("RIB already exist !", HttpStatus.BAD_REQUEST);
+		} 
+		List<Account> userAccounts = accountService.findAllAccountByUserCin(cin);
+		if (userAccounts.size() >= 2 ) {
+			return new ResponseEntity<>("User already have two account (Saving, Current)", HttpStatus.BAD_REQUEST);
+		} else if (userAccounts.size() == 1) {
+			AccountType accountType = userAccounts.get(0).getAccType();
+			if (accountType.equals(account.getAccType())) {
+				return new ResponseEntity<>("User already have a " + account.getAccType().toString() +" account", HttpStatus.BAD_REQUEST);
+			}
+		}
+		return new ResponseEntity<>(accountService.saveAccount(cin, account), HttpStatus.OK); 
 	}
 	
 	@PostMapping(value ="/updateAccount/{accNumber}")

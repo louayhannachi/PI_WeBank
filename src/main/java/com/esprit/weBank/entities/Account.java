@@ -30,13 +30,13 @@ public class Account{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	@Column(name = "account_number")
+	@Column(name = "account_number", unique = true)
 	private long accNumber;
 	@Column(name = "balance")
 	private double balance;
 	@Column(name = "opening_date")
 	private String openingDate;
-	@Column(name = "rib")
+	@Column(name = "rib", unique = true)
 	private long rib;
 	@Column(name = "solde")
 	private int solde;

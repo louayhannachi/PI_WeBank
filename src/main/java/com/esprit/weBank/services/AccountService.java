@@ -1,6 +1,9 @@
 package com.esprit.weBank.services;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,6 +34,15 @@ public class AccountService {
 	
 	public List<Account> findAllAccount() {
 		return (List<Account>) accountRepository.findAll();
+	}
+	
+	public List<Account> findAllAccountByUserCin(String cin) {
+		List<Account> temp =  (List<Account>) accountRepository.findAll();
+		List<Account> filtredAccountListByUser = new ArrayList<Account>();
+		if (temp != null && temp.size() > 0) {
+			filtredAccountListByUser = temp.stream().filter(res -> res.getOwner().getCin().equals(cin)).collect(Collectors.toList());
+		}
+		return filtredAccountListByUser;
 	}
 	
 	public Account findAccountById(int id) {

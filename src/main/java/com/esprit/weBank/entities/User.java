@@ -27,7 +27,7 @@ public class User implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	@Column(name = "username")
+	@Column(name = "username" , unique = true)
 	private String username;
 	@Column(name = "firstname")
 	private String firstName;
@@ -37,7 +37,7 @@ public class User implements Serializable {
 	private String birthDate;
 	@Column(name = "phone_number")
 	private String phoneNumber;
-	@Column(name = "cin")
+	@Column(name = "cin", unique = true)
 	private String cin;
 	@Column(name = "email")
 	private String email;

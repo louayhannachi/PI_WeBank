@@ -16,7 +16,8 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
 	@Override
 	public void commence(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException authException) throws IOException, ServletException {
-		response.getWriter().write("Access Denied... Forbidden");
+		response.getWriter().write("Access Denied... Forbidden (Invalid Token or incorrect role)");
+		response.setStatus(403);
 	}
 
 }

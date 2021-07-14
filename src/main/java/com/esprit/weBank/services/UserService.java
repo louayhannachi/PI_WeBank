@@ -47,6 +47,7 @@ public class UserService {
 			existingUser.setPhoneNumber(user.getPhoneNumber());
 			existingUser.setEmail(user.getEmail());
 			existingUser.setAddress(user.getAddress());
+			existingUser.setUsername(user.getUsername());
 			return userRepository.save(existingUser);
 		}		
 		return null;
