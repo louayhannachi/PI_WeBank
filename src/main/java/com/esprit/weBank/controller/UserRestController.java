@@ -45,6 +45,20 @@ public class UserRestController {
 		return new ResponseEntity<>(userService.saveUser(user), HttpStatus.OK);
 		
 	}
+	
+	@PutMapping(value = "/createAdmin")
+	public ResponseEntity<Object> createAdmin(@RequestBody User user) {
+		User temp = userService.findUserByCin(user.getCin());
+		if (temp != null) {
+			return new ResponseEntity<>("Cin already exist !", HttpStatus.BAD_REQUEST);
+		}
+		User temp2 = userService.findByUserName(user.getUsername());
+		if (temp2 != null) {
+			return new ResponseEntity<>("UserName already exist !", HttpStatus.BAD_REQUEST);
+		}
+		user.setRole(UserRole.ROLE_ADMIN);
+		return new ResponseEntity<>(userService.saveUser(user), HttpStatus.OK);
+	}
 
 	@PostMapping(value = "/updateUser/{cin}")
 	public ResponseEntity<Object> updateUser(@PathVariable(value = "cin") String cin, @RequestBody User user) {
