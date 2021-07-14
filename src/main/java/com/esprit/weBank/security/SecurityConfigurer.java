@@ -61,6 +61,8 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 				"/api/convert"
 				).hasAnyRole("EMPLOYEE", "CLIENT", "ADMIN")
 		.antMatchers(
+				"/api/createAdmin",
+				"/api/createEmployee",
 				"/api/createClient", 
 				"/api/updateUser/*" , 
 				"/api/deleteUser/*" , 

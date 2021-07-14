@@ -1,6 +1,5 @@
 package com.esprit.weBank.services;
 
-import static org.mockito.Mockito.never;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
