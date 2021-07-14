@@ -26,7 +26,7 @@ public class ReactService {
 	PostService postService;
 	
 	public static final String ACCOUNT_SID = "ACb54e4537bc0c89c12793d12999cc4f16";
-	public static final String AUTH_TOKEN = "682bac31ba7914533077f96a92b252b5";
+	public static final String AUTH_TOKEN = "6d548a8b3445ff0c47ac9209415b1fef";
 
 	public React saveReact(React react) {
 			if (react.getReactType().toString().equals(ReactType.LIKE.toString())){
