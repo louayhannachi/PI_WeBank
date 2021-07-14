@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import com.esprit.weBank.entities.Credit;
+import com.esprit.weBank.entities.Transaction;
 import com.esprit.weBank.entities.User;
 
 public interface ICreditRepository extends CrudRepository<Credit, Integer> {
@@ -19,6 +20,12 @@ public interface ICreditRepository extends CrudRepository<Credit, Integer> {
 			+"from account " 
 			+"where account.client_id=:id ", nativeQuery = true)
 	public int calculeSommeMontant(@Param("id") int id);
+
+
+	@Query(value = "SELECT * "
+			+"from credit "
+			+"where credit.duree>=:date ", nativeQuery = true)
+	public List<Credit> getCreditByDuree(@Param("date") int date);
 
 
 }

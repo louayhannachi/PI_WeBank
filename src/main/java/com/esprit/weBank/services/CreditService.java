@@ -48,12 +48,27 @@ public class CreditService {
 		}
 		return null;
 	}
+	
+	public Credit updateCreditNull(Credit credit, int id) {
+		Credit existingCredit = findCreditById(id);
+		if (existingCredit != null) {
+			existingCredit.setUser(null);
+			return creditRepository.save(existingCredit);
+		}
+		return null;
+	}
 
 	public void deleteCreditById(int id) {
+		Credit credit =findCreditById(id);;
+		updateCreditNull(credit,id);
 		creditRepository.deleteById(id);
 	}
 
 	public int calculeSommeMontant(int id) {
 		return creditRepository.calculeSommeMontant(id);
 	}
+	public List<Credit> getCreditByDuree(int date) {
+		return (List<Credit>) creditRepository.getCreditByDuree(date);
+	}
+	
 }
