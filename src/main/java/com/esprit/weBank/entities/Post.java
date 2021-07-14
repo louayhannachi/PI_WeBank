@@ -12,6 +12,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity(name = "post")
@@ -37,11 +39,16 @@ public class Post {
 
 	@OneToMany(mappedBy = "post", cascade = { CascadeType.PERSIST,
 			CascadeType.REMOVE }, fetch = FetchType.EAGER, orphanRemoval = true)
-	private Set<Comment> comments ;
+	private Set<Comment> comments;
 
 	@OneToMany(mappedBy = "post", cascade = { CascadeType.PERSIST,
 			CascadeType.REMOVE }, fetch = FetchType.EAGER, orphanRemoval = true)
 	private Set<React> reacts;
+	
+	@ManyToOne
+	@JoinColumn(name = "user_FK", nullable = true)
+	private User user;
+
 
 	/*
 	 * @ManyToOne(fetch = FetchType.EAGER)
@@ -60,7 +67,7 @@ public class Post {
 	 * List<React> reacts;
 	 */
 
-	public Post(int id, String creationDate, String content, String updatedDate, int nbrLikes, int nbrDislikes) {
+	public Post(int id, String creationDate, String content, String updatedDate, int nbrLikes, int nbrDislikes, User user) {
 		super();
 		this.id = id;
 		this.creationDate = creationDate;
@@ -68,6 +75,8 @@ public class Post {
 		this.updatedDate = updatedDate;
 		this.nbrLikes = nbrLikes;
 		this.nbrDislikes = nbrDislikes;
+		this.user = user;
+
 
 	}
 
@@ -79,6 +88,14 @@ public class Post {
 		return id;
 	}
 
+	/*public int getUser() {
+		return user.getId();
+	}*/
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+	
 	public void setId(int id) {
 		this.id = id;
 	}
@@ -118,7 +135,7 @@ public class Post {
 	public void setNbrLikes(int nbrLikes) {
 		this.nbrLikes = nbrLikes;
 	}
-	
+
 	public int getNbrDislikes() {
 		return nbrDislikes;
 	}
@@ -128,7 +145,6 @@ public class Post {
 	}
 
 	// *************comment Join**************
-
 
 	public Set<Comment> getComment() {
 		return comments;
@@ -145,9 +161,9 @@ public class Post {
 
 	// *************comment Join**************
 
-	/*public Set<React> getReact() {
-		return reacts;
-	}*/
+	/*
+	 * public Set<React> getReact() { return reacts; }
+	 */
 
 	public void setReact(Set<React> reacts) {
 		this.reacts = reacts;

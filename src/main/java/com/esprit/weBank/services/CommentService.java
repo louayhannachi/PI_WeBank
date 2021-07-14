@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.esprit.weBank.entities.Comment;
+import com.esprit.weBank.entities.React;
 import com.esprit.weBank.repository.ICommentRepository;
 
 @Service
@@ -24,6 +25,8 @@ public class CommentService {
 	}
 
 	public void deleteCommentById(int id) {
+		Comment Comment = findCommentById(id);
+		updateCommentNull(Comment, id);
 		commentRepository.deleteById(id);
 	}
 	
@@ -46,6 +49,15 @@ public class CommentService {
 			existingComment.setContent(comment.getContent());
 			return commentRepository.save(existingComment);
 		}		
+		return null;
+	}
+	
+	public Comment updateCommentNull(Comment comment, int id) {
+		Comment existingComment = findCommentById(id);
+		if (existingComment != null) {
+			existingComment.setPost(null);
+			return commentRepository.save(existingComment);
+		}
 		return null;
 	}
 }

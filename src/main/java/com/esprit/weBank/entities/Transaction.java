@@ -1,5 +1,7 @@
 package com.esprit.weBank.entities;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,7 +25,7 @@ public class Transaction {
 	@Column(name = "ribR")
 	private int ribR;
 	@Column(name = "dateT")
-	private Date dateT;
+	private String dateT;
 	@Column(name = "montant")
 	private Double montant;
 	@Column(name = "devise")
@@ -37,7 +39,7 @@ public class Transaction {
 
 	}
 
-	public Transaction(int id, String nomC, String type, int ribE, int ribR, Date dateT, Double montant, String devise,
+	public Transaction(int id, String nomC, String type, int ribE, int ribR, String dateT, Double montant, String devise,
 			User user) {
 		super();
 		this.id = id;
@@ -107,12 +109,14 @@ public class Transaction {
 		this.ribR = ribR;
 	}
 
-	public Date getDateT() {
+	public String getDateT() {
 		return dateT;
 	}
 
-	public void setDateT(Date dateT) {
-		this.dateT = dateT;
+	public void setDateT(String dateT) {
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+		LocalDateTime now = LocalDateTime.now();
+		this.dateT = dtf.format(now);
 	}
 
 	public Double getMontant() {

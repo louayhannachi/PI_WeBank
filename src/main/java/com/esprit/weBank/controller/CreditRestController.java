@@ -20,8 +20,9 @@ public class CreditRestController {
 	private CreditService creditService;
 
 	@PutMapping(value = "/createCredit")
-	public Credit createCredit(@RequestBody Credit credit) {
+	public double createCredit(@RequestBody Credit credit) {
 		return creditService.addCredit(credit);
+		 
 	}
 
 	@GetMapping(value = "/getAllCredits")
@@ -33,11 +34,6 @@ public class CreditRestController {
 	public void deleteCredit(@PathVariable(value = "id") int id) {
 		creditService.deleteCreditById(id);
 	}
-	/*
-	 * @GetMapping(value ="/getCreditByRibE/{ribE}") public List<Credit>
-	 * findCreditByRibE(@PathVariable(value = "ribE") int ribE) { return
-	 * creditService.findCreditByRibE(ribE); }
-	 */
 
 	@GetMapping(value = "/getCreditsById/{id}")
 	public Credit getCreditById(@PathVariable(value = "id") int id) {
@@ -47,6 +43,11 @@ public class CreditRestController {
 	@PostMapping(value = "/updateCredit/{id}")
 	public Credit updateCredit(@PathVariable(value = "id") int id, @RequestBody Credit Credit) {
 		return creditService.updateCredit(Credit, id);
+	}
+
+	@GetMapping(value = "/calculeSommeMontant/{id}")
+	public int calculeSommeMontant(@PathVariable(value = "id") int id) {
+		return creditService.calculeSommeMontant(id);
 	}
 
 }

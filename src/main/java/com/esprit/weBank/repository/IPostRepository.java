@@ -1,5 +1,6 @@
 package com.esprit.weBank.repository;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.Query;
@@ -23,4 +24,8 @@ public interface IPostRepository extends CrudRepository<Post, Integer> {
 			+ "and react.react_Type=:reactType "
 			+ "and post.id=:idPost) reactCount", nativeQuery = true)
 	public int findReactsByPost(@Param("reactType") String reactType, @Param("idPost") int idPost);
+	
+	@Query(value ="SELECT id, post.content, MAX(post.nbr_likes) as nbrL FROM post where nbr_likes=(select max(nbr_likes) from post)", nativeQuery = true)
+    public String bestPost();
+	
 }

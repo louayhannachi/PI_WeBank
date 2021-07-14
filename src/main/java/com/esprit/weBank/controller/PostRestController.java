@@ -1,5 +1,7 @@
 package com.esprit.weBank.controller;
 
+import java.io.FileNotFoundException;
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +21,7 @@ public class PostRestController {
 	private PostService postService;
 
 	@PutMapping(value = "/createPost")
-    public Post createPost(@RequestBody Post post) {
+    public Post createPost(@RequestBody Post post) throws FileNotFoundException {
 		return postService.savePost(post);
 	}
 	
@@ -58,4 +60,11 @@ public class PostRestController {
 	public int getNbrDislikes(@PathVariable(value = "idPost") int idPost) {
 		return postService.getDislikesByPost(idPost);
 	}
+    
+   @GetMapping(value = "/getBestPost")
+	public String getBestP() {
+		return postService.getBestPost();
+	}
+    
+    
 }
