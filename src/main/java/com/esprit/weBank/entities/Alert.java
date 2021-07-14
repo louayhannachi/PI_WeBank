@@ -1,10 +1,7 @@
 package com.esprit.weBank.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Date;
 
 @Entity(name = "alert")
 
@@ -13,14 +10,14 @@ public class Alert {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	@Column(name = "alert_date")
-	private String alertDate;
+	private Date alertDate;
 	@Column(name = "alert_msg")
 	private String alertMsg;
 	
 	public Alert() {
 		super();
 	}
-	public Alert(int id, String alertDate, String alertMsg) {
+	public Alert(int id, Date alertDate, String alertMsg) {
 		super();
 		this.id = id;
 		this.alertDate = alertDate;
@@ -32,10 +29,10 @@ public class Alert {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getAlertDate() {
+	public Date getAlertDate() {
 		return alertDate;
 	}
-	public void setAlertDate(String alertDate) {
+	public void setAlertDate(Date alertDate) {
 		this.alertDate = alertDate;
 	}
 	public String getAlertMsg() {
@@ -44,8 +41,6 @@ public class Alert {
 	public void setAlertMsg(String alertMsg) {
 		this.alertMsg = alertMsg;
 	}
-	
-	
-	
+
 	
 }

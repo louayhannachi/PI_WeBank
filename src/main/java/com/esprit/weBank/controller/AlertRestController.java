@@ -20,25 +20,25 @@ public class AlertRestController {
 	private AlertService alertService;
 	
 	
-	@PutMapping(value = "/createAlert/{id}")
-    public Alert createAlert(@PathVariable(value = "id") int id, @RequestBody Alert alert) {
-		return alertService.saveAlert(alert,id);
+	@PostMapping(value = "/createAlert/{rib}")
+    public Alert createAlert(@PathVariable(value = "rib") int rib,@RequestBody Alert alert) {
+		return alertService.saveAlert(alert,rib);
 	}
-	
-	@PostMapping(value ="/updateAlert/{id}")
+
+	@PutMapping(value ="/updateAlert/{id}")
 	public Alert updateAlert(@PathVariable(value = "id") int id, @RequestBody Alert alert) {
 		return alertService.updateAlert(alert, id);
 	}
-	
+
 	@DeleteMapping(value ="/deleteAlert/{id}")
 	public void deleteAlert(@PathVariable(value = "id") int id) {
 		alertService.deleteAlertById(id);	}
-	
+
 	@GetMapping(value ="/getAlertById/{id}")
 	public Alert getAlertById(@PathVariable(value = "id") int id) {
 		return alertService.findAlertById(id);
 	}
-	
+
 	@GetMapping(value ="/getAllAlerts")
 	public List<Alert> getAllAlerts() {
 		return alertService.findAllAlert();
