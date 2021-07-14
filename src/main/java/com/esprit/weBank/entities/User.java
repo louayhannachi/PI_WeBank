@@ -16,6 +16,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import com.esprit.weBank.util.UserRole;
 
 
@@ -54,6 +57,12 @@ public class User implements Serializable {
 			fetch=FetchType.EAGER)
 	private List<Transaction> transactions = new ArrayList<>();
 
+	@OneToMany(mappedBy="user", 
+			cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, 
+			fetch=FetchType.EAGER)
+	@Fetch(value = FetchMode.SUBSELECT)
+	private List<Post> post = new ArrayList<>();
+	
 	public User() {
 		super();
 	}
