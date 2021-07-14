@@ -51,4 +51,9 @@ public class UserRestController {
 	public List<User> getAllUsers() {
 		return userService.findAllUser();
 	}
+	
+	@GetMapping(value ="/getUserByid/{id}")
+	public User getUserByCin(@PathVariable(value = "id") int id) {
+		return userService.findUserById(id);
+	}
 }

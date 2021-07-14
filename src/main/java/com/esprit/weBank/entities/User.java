@@ -83,6 +83,9 @@ public class User implements Serializable {
 		this.role = role;
 	}
 	
+	public User(int id){
+		this.id = id;
+	}
 	public void addTransactionByUser(Transaction transaction){
 		transaction.setUser(this);
 		this.transactions.add(transaction);
