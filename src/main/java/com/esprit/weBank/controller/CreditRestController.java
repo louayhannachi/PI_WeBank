@@ -49,6 +49,7 @@ public class CreditRestController {
 	public int calculeSommeMontant(@PathVariable(value = "id") int id) {
 		return creditService.calculeSommeMontant(id);
 	}
+	
 	@GetMapping(value = "/getCreditByDuree/{date}")
 	public List<Credit> getCreditByDuree(@PathVariable(value = "date") int date) {
 		return creditService.getCreditByDuree(date);

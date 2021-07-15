@@ -54,7 +54,7 @@ public class AccountService {
 	}
 	
 	public Account findAccountByRib(long rib) {
-		return accountRepository.findByRib(rib).orElse(null);
+		return accountRepository.findByRib(rib);
 	}
 	
 	public Account updateAccountBalanceByAccNumber(Account account, long accNumber) {

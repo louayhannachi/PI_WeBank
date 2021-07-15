@@ -2,13 +2,17 @@ package com.esprit.weBank.services;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
+
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.esprit.weBank.entities.Account;
 import com.esprit.weBank.entities.Credit;
 import com.esprit.weBank.entities.Transaction;
 import com.esprit.weBank.entities.User;
+import com.esprit.weBank.repository.IAccountRepository;
 import com.esprit.weBank.repository.ITransactionRepository;
 import com.esprit.weBank.util.AccountType;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -24,6 +28,10 @@ public class TransactionService {
 	private ITransactionRepository transactionRepository;
 
 	UserService userService;
+
+	AccountService accountService;
+	@Autowired
+	IAccountRepository accountRepository;
 
 	public List<Transaction> findAllTransaction() {
 		return (List<Transaction>) transactionRepository.findAll();
@@ -69,7 +77,7 @@ public class TransactionService {
 		}
 		return null;
 	}
-	
+
 	public void deleteTransactionById(int id) {
 		Transaction existingTransaction = findTransactionById(id);
 		updateTransactionNull(existingTransaction, id);
@@ -82,19 +90,29 @@ public class TransactionService {
 		transactionRepository.updateBalanceR(transaction.getRibR());
 
 	}
+
 	@Transactional
 	public void addTransaction(Transaction transaction) {
-		transactionRepository.save(transaction);
-		if ((transaction.getType()).equals(((AccountType.CURRENT).toString()))) {
-			transactionRepository.updateBalanceCredit(transaction.getUser());
-			transactionRepository.updateBalanceR(transaction.getRibR());
+
+		if ((transaction.getType()).equals(((AccountType.SAVINGS).toString()))) {
+			Account acc = accountRepository.findByRib(transaction.getRibE());
+			acc.setBalance(acc.getBalance() + transaction.getMontant());
+			accountRepository.save(acc);
+			transactionRepository.save(transaction);
 		} else {
-			transactionRepository.updateBalanceSaving(transaction.getUser());
+			Account acc = accountRepository.findByRib(transaction.getRibE());
+			acc.setBalance(acc.getBalance() - transaction.getMontant());
+			accountRepository.save(acc);
+			Account accR = accountRepository.findByRib(transaction.getRibR());
+			accR.setBalance(accR.getBalance() + transaction.getMontant());
+			accountRepository.save(accR);
+			transactionRepository.save(transaction);
 		}
+
 	}
 
 	@Transactional
-	//@Scheduled(fixedRate = 30000)
+	// @Scheduled(fixedRate = 30000)
 	public CompletableFuture<Transaction> addbyth() {
 
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");

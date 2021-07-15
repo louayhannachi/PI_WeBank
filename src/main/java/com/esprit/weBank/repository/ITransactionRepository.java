@@ -22,7 +22,7 @@ public interface ITransactionRepository extends CrudRepository<Transaction, Inte
 	@Query(value = "UPDATE account " 
 			+ "INNER JOIN transaction " 
 			+ "ON account.client_id = transaction.user_fk "
-			+ "set account.balance=account.balance - transaction.montant "
+			+ "set account.balance=:account.balance - transaction.montant "
 			+ "where account.client_id=:idU ", nativeQuery = true)
 	public void updateBalanceCredit(@Param("idU") int idU);
 	
@@ -30,7 +30,7 @@ public interface ITransactionRepository extends CrudRepository<Transaction, Inte
 	@Query(value = "UPDATE account " 
 			+ "INNER JOIN transaction " 
 			+ "ON account.client_id = transaction.user_fk "
-			+ "set account.balance=account.balance + transaction.montant "
+			+ "set account.balance=account.balance * transaction.montant "
 			+ "where account.client_id=:idU ", nativeQuery = true)
 	public void updateBalanceSaving(@Param("idU") int idU);
 	
