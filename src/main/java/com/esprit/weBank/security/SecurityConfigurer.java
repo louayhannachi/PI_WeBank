@@ -76,7 +76,15 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 				"/api/deleteComment/*",
 				"/api/getCommentById/*",
 				"/api/updateComment/*",
-				"/api/report/*"
+				"/api/report/*",
+				"/api/addreclamation",
+				"/api/listallreclamations",
+				"/api/statInprog",
+				"/api/statClosed",
+				"/api/statOpen",
+				"/api/updatereclamation/*",
+				"/api/deletereclamation/*",
+				"/api/findbycriteria"
 				).hasAnyRole("EMPLOYEE", "CLIENT", "ADMIN")
 		.antMatchers(
 				"/api/createAdmin",
