@@ -65,6 +65,12 @@ public class PostRestController {
 	public String getBestP() {
 		return postService.getBestPost();
 	}
+   
+   @GetMapping(value = "/report/{idPost}")
+	public Post addReport(@PathVariable(value = "idPost") int idPost, @RequestBody Post post) {
+		 return postService.reportPost(post, idPost);
+	}
+   
     
     
 }

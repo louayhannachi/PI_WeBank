@@ -1,6 +1,5 @@
 package com.esprit.weBank.services;
 
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.math.BigDecimal;
@@ -37,7 +36,6 @@ public class PostService {
 	private IPostRepository postRepository;
 	@Autowired
 	private JavaMailSender emailSender;
-
 
 	public Post savePost(Post post) throws FileNotFoundException {
 
@@ -86,7 +84,7 @@ public class PostService {
 		Post post = findPostById(id);
 		updatePostNull(post, id);
 		postRepository.deleteById(id);
-	    
+
 	}
 
 	public Post updatePost(Post post, int id) {
@@ -145,27 +143,49 @@ public class PostService {
 		return postRepository.bestPost();
 	}
 
-	/*@Transactional
-	@Scheduled(fixedRate = 10000)
-	public void bestPostMail() {
-
-		 
-		String info = getBestPost();
-		List<String> infos = Arrays.asList(info.split(","));
+	public Post reportPost(Post post ,int id){
+		post = findPostById(id);
+		int report = post.getNbrReports();
+		post.setNbrReports(report+=1);
+		postRepository.save(post);
+		if (post.getNbrReports()>9){
+			deletePostById(post.getId());
+			deletePostById(post.getId());
+		}
 		
-		SimpleMailMessage msg = new SimpleMailMessage();
-		msg.setTo("mmelekmahmoudi@gmail.com");
+		return findPostById(id);
 
-		msg.setSubject("best post");
-		msg.setText("\n id of best post is: "+infos.get(0)+" \n content of post : "+infos.get(1)+" \n got "+infos.get(2)+ " likes ");
+	}
 
-		emailSender.send(msg);
-		
-
-		 
-		    
-
-	    //logger.info(" \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n id of best post is: "+infos.get(0)+" \n content of post : "+infos.get(1)+" \n got "+infos.get(2)+ " likes \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n");
-	}*/
+	/*
+	 * @Transactional
+	 * 
+	 * @Scheduled(fixedRate = 10000) public void bestPostMail() {
+	 * 
+	 * 
+	 * String info = getBestPost(); List<String> infos =
+	 * Arrays.asList(info.split(","));
+	 * 
+	 * SimpleMailMessage msg = new SimpleMailMessage();
+	 * msg.setTo("mmelekmahmoudi@gmail.com");
+	 * 
+	 * msg.setSubject("best post");
+	 * msg.setText("\n id of best post is: "+infos.get(0)
+	 * +" \n content of post : "+infos.get(1)+" \n got "+infos.get(2)+
+	 * " likes ");
+	 * 
+	 * emailSender.send(msg);
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * //logger.
+	 * info(" \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n id of best post is: "
+	 * +infos.get(0)+" \n content of post : "+infos.get(1)+" \n got "+infos.get(
+	 * 2)+
+	 * " likes \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n"
+	 * ); }
+	 */
 
 }

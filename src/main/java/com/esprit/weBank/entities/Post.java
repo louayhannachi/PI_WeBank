@@ -36,7 +36,11 @@ public class Post {
 
 	@Column(name = "nbrDislikes")
 	private int nbrDislikes;
-
+	
+	@Column(name = "nbrReports")
+	private int nbrReports;
+	
+	
 	@OneToMany(mappedBy = "post", cascade = { CascadeType.PERSIST,
 			CascadeType.REMOVE }, fetch = FetchType.EAGER, orphanRemoval = true)
 	private Set<Comment> comments;
@@ -67,7 +71,7 @@ public class Post {
 	 * List<React> reacts;
 	 */
 
-	public Post(int id, String creationDate, String content, String updatedDate, int nbrLikes, int nbrDislikes, User user) {
+	public Post(int id, String creationDate, String content, String updatedDate, int nbrLikes, int nbrDislikes, int nbrReports, User user) {
 		super();
 		this.id = id;
 		this.creationDate = creationDate;
@@ -76,6 +80,7 @@ public class Post {
 		this.nbrLikes = nbrLikes;
 		this.nbrDislikes = nbrDislikes;
 		this.user = user;
+		this.nbrReports = nbrReports;
 
 
 	}
@@ -143,8 +148,18 @@ public class Post {
 	public void setNbrDislikes(int nbrDislikes) {
 		this.nbrDislikes = nbrDislikes;
 	}
+	
+	public int getNbrReports() {
+		return nbrReports;
+	}
+
+	public void setNbrReports(int nbrReports) {
+		this.nbrReports = nbrReports;
+	}
 
 	// *************comment Join**************
+
+	
 
 	public Set<Comment> getComment() {
 		return comments;
