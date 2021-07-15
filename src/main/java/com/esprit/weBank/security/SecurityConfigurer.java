@@ -58,7 +58,24 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 				"/api/getAllBudget",
 				"/api/createAlert/*",
 				"/api/createTransaction",
-				"/api/convert"
+				"/api/convert",
+				"/api/createPost",
+				"/api/getPostById/*",
+				"/api/getAllPosts",
+				"/api/deletePost/*",
+				"/api/updatePost/*",
+				"/api/getNbrPost",
+				"/api/getNbrLikes/*",
+				"/api/getNbrDislikes/*",
+				"/api/getBestPost/*",
+				"/api/createReact",
+				"/api/getAllReacts",
+				"/api/deleteReact/*",
+				"/api/createComment",
+				"/api/getAllComments",
+				"/api/deleteComment/*",
+				"/api/getCommentById/*",
+				"/api/updateComment/*"
 				).hasAnyRole("EMPLOYEE", "CLIENT", "ADMIN")
 		.antMatchers(
 				"/api/createAdmin",
