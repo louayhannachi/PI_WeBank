@@ -8,9 +8,11 @@ import org.springframework.stereotype.Service;
 import com.esprit.weBank.entities.Investment;
 import com.esprit.weBank.entities.User;
 import com.esprit.weBank.repository.IInvestmentRepository;
+import com.esprit.weBank.util.InvestmentType;
 
 @Service
 public class InvestmentService {
+	
 	@Autowired
 	private IInvestmentRepository investmentRepository;
 
@@ -49,6 +51,50 @@ public class InvestmentService {
 	
 	public void deleteInvestmentById(int id) {
 		investmentRepository.deleteById(id);
+	}
+	
+	public String simulateInvestment(Investment investment) {
+        String recommendation;
+
+		switch (investment.getInvestType().toString()) {
+        case "Bonds": 
+        	if (investment.getInvestCost() > 1000) {
+        		recommendation = "Investment in Bonds with (" + investment.getInvestCost() + ")$ is risky";
+        	} else {
+        		recommendation = "Investment in Bonds with (" + investment.getInvestCost() + ")$ is safe";
+        	}
+        break;
+        case "Stocks": 
+        	if (investment.getInvestCost() > 10000) {
+        		recommendation = "Investment in Stocks with (" + investment.getInvestCost() + ")$ is risky";
+        	} else {
+        		recommendation = "Investment in Stocks with (" + investment.getInvestCost() + ")$ is safe";
+        	}
+        break;
+        case "MutualFunds": 
+        	if (investment.getInvestCost() > 999) {
+        		recommendation = "Investment in Mutual Funds with (" + investment.getInvestCost() + ")$ is risky";
+        	} else {
+        		recommendation = "Investment in Mutual Funds with (" + investment.getInvestCost() + ")$ is safe";
+        	}
+        break;
+        case "RealEstate": 
+        	if (investment.getInvestCost() > 50000) {
+        		recommendation = "Investment in Real estate with (" + investment.getInvestCost() + ")$ is risky";
+        	} else {
+        		recommendation = "Investment in Real estate with (" + investment.getInvestCost() + ")$ is safe";
+        	}
+        break;
+        case "Savings": 
+        case "LifeInsurance":
+        case "CertificateOfDeposit": 
+        case "Foreign": 
+            recommendation = "Investment is not risky";
+        break;
+        default: recommendation = "Investment with Medium risk";
+        break;		
+        }
+		return recommendation;
 	}
 	
 	public void deleteInvestmentByName(String name) {
