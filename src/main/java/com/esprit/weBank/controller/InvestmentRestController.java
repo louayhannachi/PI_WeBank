@@ -30,19 +30,22 @@ public class InvestmentRestController {
 	@Autowired
 	IInvestmentRepository investmentRepository;
 	
+	//@RolesAllowed({"ROLE_ADMIN","ROLE_CLIENT"})
 	@PostMapping(value = "/addInvestment")
 	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseEntity<Investment> createReclamation(@RequestBody Investment investment) {
+	public ResponseEntity<Investment> createInvestment(@RequestBody Investment investment) {
 
 		return new ResponseEntity<>(investmentService.saveInvestment(investment), HttpStatus.OK);
 	}
 
+	//@RolesAllowed({"ROLE_ADMIN","ROLE_EMPLOYEE"})
 	@RequestMapping(value = "/getAllInvestments", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.ACCEPTED)
-	public List<Investment> findAllReclamation() {
+	public List<Investment> findAllInvestments() {
 		return investmentService.findAllInvestment();
 	}
 	
+	//@RolesAllowed({"ROLE_ADMIN","ROLE_EMPLOYEE"})
 	@PutMapping(value = "updateInvestsment/{id}")
 	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<Investment> updateInvestsment(@PathVariable(value = "id") Integer id,
@@ -50,6 +53,7 @@ public class InvestmentRestController {
 		return new ResponseEntity<>(investmentService.updateInvestment(investment, id),HttpStatus.OK);
 	}
 
+	//@RolesAllowed({"ROLE_ADMIN","ROLE_EMPLOYEE"})
 	@DeleteMapping(value = "deleteInvestment/{id}")
 	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<String> deleteInvestment(@PathVariable(value = "id") Integer id) {

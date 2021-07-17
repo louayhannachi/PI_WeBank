@@ -99,10 +99,14 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 				"/api/updateAccountByRib/*",
 				"/api/deleteAccount/*",
 				"/api/getAccountByAccNumber/*",
-				"/api/getAccountByRib/*"
+				"/api/getAccountByRib/*",
+				"api/investment/getAllInvestments",
+				"/api/investment/updateInvestsment/*",
+				"/api/investment/deleteInvestment/*"
 				).hasAnyRole("EMPLOYEE", "ADMIN")
 		.antMatchers(
-				"/api/getUserByName/*"
+				"/api/getUserByName/*",
+				"/api/investment/addInvestment"
 				).hasAnyRole("CLIENT", "ADMIN")
 		.anyRequest().authenticated().and()
         .exceptionHandling()
