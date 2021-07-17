@@ -33,9 +33,11 @@ public class InvestmentRestController {
 	//@RolesAllowed({"ROLE_ADMIN","ROLE_CLIENT"})
 	@PostMapping(value = "/addInvestment")
 	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseEntity<Investment> createInvestment(@RequestBody Investment investment) {
-
-		return new ResponseEntity<>(investmentService.saveInvestment(investment), HttpStatus.OK);
+	public ResponseEntity<Object> createInvestment(@RequestBody Investment investment) {
+		if (investment.getAccount().getBalance() < investment.getInvestCost()) {	
+			return new ResponseEntity<>("Insufficient balance !", HttpStatus.BAD_REQUEST);
+		}
+			return new ResponseEntity<>(investmentService.saveInvestment(investment), HttpStatus.OK);
 	}
 
 	//@RolesAllowed({"ROLE_ADMIN","ROLE_EMPLOYEE"})
@@ -45,7 +47,7 @@ public class InvestmentRestController {
 		return investmentService.findAllInvestment();
 	}
 	
-	//@RolesAllowed({"CLIENT", "ROLE_ADMIN","ROLE_EMPLOYEE"})
+	//@RolesAllowed({"ROLE_CLIENT", "ROLE_ADMIN","ROLE_EMPLOYEE"})
 	@RequestMapping(value = "/getAccInvestments/{account_number}", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.ACCEPTED)
 	public List<Investment> findAllInvestments(@PathVariable(value = "account_number") int account_number) {
@@ -66,6 +68,13 @@ public class InvestmentRestController {
 	public ResponseEntity<String> deleteInvestment(@PathVariable(value = "id") Integer id) {
 		investmentService.deleteInvestmentById(id);
 		return new ResponseEntity<>("Deleted investment with id : " + id, HttpStatus.OK);
+	}
+	
+	//@RolesAllowed({"ROLE_CLIENT", "ROLE_ADMIN","ROLE_EMPLOYEE"})
+	@PostMapping(value = "/simulateInvestment")
+	@ResponseStatus(HttpStatus.CREATED)
+	public ResponseEntity<String> simulateInvestment(@RequestBody Investment investment) {
+		return new ResponseEntity<>(investmentService.simulateInvestment(investment), HttpStatus.OK);
 	}
 
 }
