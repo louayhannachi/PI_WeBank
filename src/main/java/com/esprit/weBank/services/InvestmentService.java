@@ -1,6 +1,7 @@
 package com.esprit.weBank.services;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,13 @@ public class InvestmentService {
 
 	public List<Investment> findAllInvestment() {
 		return (List<Investment>) investmentRepository.findAll();
+	}
+	
+	public List<Investment> findAccInvestment(int account_number) {
+		List<Investment> li = findAllInvestment()
+				.stream().filter(e -> account_number == e.getAccount().getAccNumber())
+				.collect(Collectors.toList()); 
+		return li;
 	}
 	
 	public Investment findInvestmentById(int id) {

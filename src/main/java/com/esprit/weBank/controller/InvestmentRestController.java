@@ -45,6 +45,13 @@ public class InvestmentRestController {
 		return investmentService.findAllInvestment();
 	}
 	
+	//@RolesAllowed({"CLIENT", "ROLE_ADMIN","ROLE_EMPLOYEE"})
+	@RequestMapping(value = "/getAccInvestments/{account_number}", method = RequestMethod.GET)
+	@ResponseStatus(HttpStatus.ACCEPTED)
+	public List<Investment> findAllInvestments(@PathVariable(value = "account_number") int account_number) {
+		return investmentService.findAccInvestment(account_number);
+	}
+	
 	//@RolesAllowed({"ROLE_ADMIN","ROLE_EMPLOYEE"})
 	@PutMapping(value = "updateInvestsment/{id}")
 	@ResponseStatus(HttpStatus.OK)
